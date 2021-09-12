@@ -19,10 +19,8 @@ class State(BaseModel, Base):
     if (getenv("HBNB_TYPE_STORAGE") == "file"):
         @property
         def cities(self):
-            from models import storage
-            from models.city import City
-            mycities = {}
-            for city, value in storage.all(City).items():
-                if (value.state_id == self.id):
-                    mycities.update({city: value})
+            mycities = []
+            for city in models.storage.all(City).values():
+                if city.state_id == self.id:
+                    mycities.append(city)
             return mycities
