@@ -16,11 +16,12 @@ class State(BaseModel, Base):
         cities = relationship('City', backref="state",
                               cascade="all, delete-orphan")
 
-    if (getenv("HBNB_TYPE_STORAGE") == "file"):
+    else:
         @property
         def cities(self):
+            from models import storage
             mycities = []
-            for city in models.storage.all(City).values():
-                if self.id == city.state_id:
+            for city in storage.all(City).values():
+                if city.state_id == self.id:
                     mycities.append(city)
             return mycities
