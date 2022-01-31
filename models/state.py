@@ -19,6 +19,7 @@ class State(BaseModel, Base):
     else:
         @property
         def cities(self):
+            """Getter Attribute"""
             from models import storage
             mycities = []
             for city in storage.all(City).values():
